@@ -84,23 +84,80 @@ MemoryRoom + Memory Interaction + Memory Update Mechanism
 - 智能上下文管理
 - 避免记忆冗余和浪费
 
+### 灵活的LLM支持
+- **LangChain集成**：使用LangChain框架，支持多种LLM提供商
+- **动态模型切换**：运行时切换OpenAI、DeepSeek等不同模型
+- **标准化接口**：统一的LLM调用接口，易于扩展
+- **提示词模板**：使用LangChain的提示词模板系统
+
 ## 📁 项目结构
 
 ```
 memoryrepository/
 ├── LICENSE                 # Apache 2.0 许可证
 ├── readme.md              # 项目说明文档
+├── requirements.txt        # 项目依赖
+├── env.example            # 环境变量模板
+├── main.py                # 主入口文件
+├── core/                  # 核心模块
+│   ├── agent.py           # AI Agent主控制器
+│   ├── llm.py             # LLM接口封装(LangChain)
+│   └── memory/            # 记忆系统
+│       ├── memory_room.py         # 记忆房间
+│       ├── memory_interaction.py  # 记忆交互
+│       └── memory_update_mechanism.py  # 记忆更新机制
+├── config/                # 配置管理
+│   ├── settings.py        # 系统配置
+│   └── prompts.py         # 提示词模板
+├── utils/                 # 工具模块
+│   └── logger.py          # 日志系统
+├── examples/              # 示例代码
+│   └── model_switch_demo.py  # 模型切换演示
 └── resources/
     └── picture/
         └── MemoryRepositoryforLittlePrice.svg  # 系统架构图
 ```
 
-## 🎯 应用场景
+## 🚀 快速开始
 
-### 智能客服
-- 记住用户偏好和历史问题
-- 提供个性化的服务体验
-- 建立长期用户关系
+### 1. 安装依赖
+```bash
+pip install -r requirements.txt
+```
+
+### 2. 配置环境变量
+```bash
+# 复制环境变量模板
+cp env.example .env
+
+# 编辑.env文件，设置您的API密钥
+LLM_PROVIDER=openai  # 或 deepseek
+LLM_MODEL=gpt-4o-mini
+LLM_API_KEY=your_api_key_here
+```
+
+### 3. 运行系统
+```bash
+# 启动命令行交互界面
+python main.py
+
+# 或者运行模型切换演示
+python examples/model_switch_demo.py
+```
+
+### 4. 支持的模型配置
+
+**OpenAI模型**：
+- `gpt-4o` - 最新的大模型
+- `gpt-4o-mini` - 快速且经济
+- `gpt-3.5-turbo` - 经典选择
+
+**DeepSeek模型**：
+- `deepseek-chat` - 通用对话模型
+- `deepseek-coder` - 编程专用模型
+- `deepseek-llm-7b-chat` - 轻量级模型
+
+## 🎯 应用场景
 
 ### 教育助手
 - 跟踪学习进度和偏好

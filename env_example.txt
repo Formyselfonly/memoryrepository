@@ -1,0 +1,14 @@
+# LLM配置
+LLM_PROVIDER=openai  # 可选: openai, deepseek
+LLM_MODEL=gpt-4o-mini  # OpenAI模型: gpt-4o-mini, gpt-4o, gpt-5, gpt-5-mini | DeepSeek模型: deepseek-chat, deepseek-reasoner
+LLM_API_KEY=your_openai_api_key_here
+
+# DeepSeek配置（如果使用DeepSeek）
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
+
+# 记忆系统配置
+MEMORY_UPDATE_INTERVAL=10  # 记忆更新间隔（轮数）
+SHORT_TERM_MAX_ROUNDS=20   # 短期记忆最大轮数
+
+# Prompt查看密码
+PROMPT_VIEW_PASSWORD=admin123  # 查看Prompt详情所需的密码
