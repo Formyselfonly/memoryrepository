@@ -9,7 +9,7 @@ from loguru import logger
 class UserManager:
     """用户管理类 - 处理用户登录和数据绑定"""
     
-    def __init__(self, db_path: str = "data/users.db"):
+    def __init__(self, db_path: str = "data/users.sqlite"):
         self.db_path = db_path
         self.ensure_db_directory()
         self.init_database()

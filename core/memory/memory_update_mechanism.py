@@ -60,7 +60,7 @@ class MemoryUpdateMechanism:
         for i, conv in enumerate(short_term_memory, 1):
             formatted.append(f"第{i}轮对话:")
             formatted.append(f"用户: {conv['user']}")
-            formatted.append(f"小王子: {conv['assistant']}")
+            formatted.append(f"小王子: {conv['ai']}")
             formatted.append("")
         
         return "\n".join(formatted)

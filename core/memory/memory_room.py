@@ -31,8 +31,6 @@ class MemoryRoom:
         success = self.database.add_short_term_memory(self.user_id, user_input, ai_response)
         
         if success:
-            # 检查是否需要清理过期的短期记忆
-            self._cleanup_old_short_term_memory()
             logger.debug("对话已添加到短期记忆")
         else:
             logger.error("添加对话到短期记忆失败")
@@ -106,6 +104,34 @@ class MemoryRoom:
             logger.info("短期记忆已清空")
         else:
             logger.error("清空短期记忆失败")
+    
+    def cleanup_short_term_memory_if_needed(self):
+        """如果需要，清理过期的短期记忆"""
+        if not self.user_id:
+            return
+            
+        try:
+            # 获取当前短期记忆数量
+            stats = self.database.get_memory_stats(self.user_id)
+            current_count = stats['short_term_count']
+            
+            if current_count > self.max_short_term_rounds:
+                # 获取所有短期记忆
+                all_memories = self.database.get_short_term_memory(self.user_id)
+                
+                # 保留最新的N轮
+                memories_to_keep = all_memories[-self.max_short_term_rounds:]
+                
+                # 清空并重新添加保留的记忆
+                self.database.clear_short_term_memory(self.user_id)
+                
+                for memory in memories_to_keep:
+                    self.database.add_short_term_memory(self.user_id, memory['user'], memory['ai'])
+                
+                logger.info(f"清理短期记忆，从 {current_count} 轮减少到 {len(memories_to_keep)} 轮")
+                
+        except Exception as e:
+            logger.error(f"清理短期记忆失败: {e}")
     
     def clear_all_memory(self):
         """清空所有记忆"""

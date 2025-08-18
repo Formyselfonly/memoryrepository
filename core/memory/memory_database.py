@@ -9,7 +9,7 @@ from loguru import logger
 class MemoryDatabase:
     """记忆数据库管理类 - 使用SQLite存储记忆数据"""
     
-    def __init__(self, db_path: str = "data/memory.db"):
+    def __init__(self, db_path: str = "data/memory.sqlite"):
         self.db_path = db_path
         self.ensure_db_directory()
         self.init_database()

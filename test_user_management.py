@@ -27,8 +27,8 @@ def test_user_management():
     try:
         # 1. 清理测试数据库
         print("1. 清理测试数据库...")
-        test_users_db = "data/users.db"
-        test_memory_db = "data/memory.db"
+        test_users_db = "data/users.sqlite"
+        test_memory_db = "data/memory.sqlite"
         
         for db_file in [test_users_db, test_memory_db]:
             if os.path.exists(db_file):

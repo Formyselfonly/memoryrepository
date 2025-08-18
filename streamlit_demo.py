@@ -72,7 +72,12 @@ def setup_api_config():
             try:
                 # 使用环境变量初始化
                 config = Config()
-                st.session_state.agent = LittlePrinceAgent(config)
+                # 检查是否有当前用户，如果有则使用其user_id
+                if st.session_state.current_user:
+                    st.session_state.agent = LittlePrinceAgent(config, st.session_state.current_user['user_id'])
+                else:
+                    st.sidebar.error("❌ 请先登录用户！")
+                    return False
                 st.session_state.chat_history = []
                 
                 st.sidebar.success("✅ 系统初始化成功！")
@@ -136,7 +141,12 @@ def setup_api_config():
             
             # 初始化配置和Agent
             config = Config()
-            st.session_state.agent = LittlePrinceAgent(config)
+            # 检查是否有当前用户，如果有则使用其user_id
+            if st.session_state.current_user:
+                st.session_state.agent = LittlePrinceAgent(config, st.session_state.current_user['user_id'])
+            else:
+                st.sidebar.error("❌ 请先登录用户！")
+                return False
             st.session_state.chat_history = []
             
             st.sidebar.success("✅ 系统初始化成功！")
