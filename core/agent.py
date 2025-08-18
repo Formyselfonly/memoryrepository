@@ -25,6 +25,13 @@ class LittlePrinceAgent:
         # 初始化记忆更新机制
         self.memory_update_mechanism = MemoryUpdateMechanism(config, self.llm, self.memory_room)
         
+        # 同步轮数计数器与实际的短期记忆数量
+        if user_id:
+            stats = self.memory_room.get_memory_stats()
+            current_short_term_count = stats['short_term_count']
+            self.memory_update_mechanism.current_round = current_short_term_count
+            logger.info(f"同步轮数计数器: {current_short_term_count} 轮")
+        
         # 初始化Prompt管理器
         self.prompt_manager = PromptManager()
         

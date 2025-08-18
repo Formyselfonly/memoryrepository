@@ -31,7 +31,8 @@ class MemoryUpdateMechanism:
     
     def should_trigger_update(self) -> bool:
         """判断是否应该触发记忆更新"""
-        return self.current_round % self.config.MEMORY_UPDATE_INTERVAL == 0
+        # 只有当轮数大于0且是MEMORY_UPDATE_INTERVAL的倍数时才触发更新
+        return self.current_round > 0 and self.current_round % self.config.MEMORY_UPDATE_INTERVAL == 0
     
     def update_memory(self, short_term_memory: List[Dict[str, str]], existing_long_term_memory: Dict[str, Any]) -> Dict[str, Any]:
         """更新长期记忆"""
