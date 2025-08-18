@@ -1,240 +1,416 @@
-# 小王子记忆构架系统 (Little Prince Memory Repository)
+# 🌹 小王子记忆架构系统 (Little Prince Memory Architecture System)
 
-> 一个基于《小王子》哲学理念设计的AI Agent智能记忆管理系统
+![小王子记忆架构系统](resources/picture/MemoryRepositoryforLittlePrice.svg)
 
-## 🌟 项目简介
+## 📖 项目简介
 
-小王子记忆构架系统是一个创新的AI Agent记忆管理解决方案，旨在为AI助手提供类似人类记忆的智能存储和检索能力。系统基于《小王子》中关于爱、友谊和成长的哲学理念，通过多层次记忆结构实现对用户的深度理解和个性化关怀。
+小王子记忆架构系统是一个基于AI Agent的智能对话系统，实现了创新的记忆管理机制。系统通过短期记忆和长期记忆的智能转换，为用户提供个性化的对话体验，同时支持多用户数据隔离和隐私保护。
+
+## 🚀 核心特性
+
+### 🧠 智能记忆架构
+- **短期记忆**: 存储最近的对话历史，支持固定轮数限制
+- **长期记忆**: 结构化存储，包含事实记忆、情节记忆、语义记忆
+- **记忆更新机制**: 自动将短期记忆总结为长期记忆
+- **记忆交互**: 智能检索和格式化记忆上下文
+
+### 👥 多用户支持
+- **用户管理系统**: 无密码登录，自动分配唯一UUID
+- **数据隔离**: 每个用户拥有独立的记忆空间
+- **会话管理**: 支持用户会话跟踪和统计
+- **隐私保护**: 明确的数据存储位置和访问权限说明
+
+### 🔧 技术架构
+- **LLM集成**: 支持OpenAI和DeepSeek等多种模型
+- **LangChain框架**: 灵活的模型切换和提示词管理
+- **SQLite数据库**: 持久化存储，支持多用户数据隔离
+- **Streamlit界面**: 现代化的Web用户界面
 
 ## 🏗️ 系统架构
 
 ### 核心组件
 
 ```
-User ↔ AI Agent (LLM + Tools + Knowledge + Memory)
-     ↓
-Context = Long-term Memory + Short-term Memory
-     ↓
-MemoryRoom + Memory Interaction + Memory Update Mechanism
+LittlePrinceAgent
+├── LLMInterface (LLM接口)
+├── MemoryRoom (记忆房间)
+│   ├── MemoryDatabase (SQLite数据库)
+│   └── MemoryInteraction (记忆交互)
+├── MemoryUpdateMechanism (记忆更新机制)
+├── PromptManager (提示词管理)
+└── UserManager (用户管理)
 ```
 
-![小王子记忆构架系统架构图](resources/picture/MemoryRepositoryforLittlePrice.svg)
+### 记忆系统设计
 
-*系统架构图展示了AI Agent与用户交互的完整流程，包括记忆的层次结构、更新机制和交互方式*
+#### 短期记忆 (Short-term Memory)
+- **存储内容**: 原始对话历史
+- **轮数限制**: 可配置的最大轮数（默认20轮）
+- **更新频率**: 实时更新
+- **存储方式**: SQLite数据库
 
-### 记忆层次结构
+#### 长期记忆 (Long-term Memory)
+- **事实记忆 (Factual Memory)**
+  - 用户身份信息（姓名、昵称、偏好称呼）
+  - 喜好与厌恶（食物、天气、颜色、动物等）
+  - 兴趣与习惯（爱好、日常作息、生活方式）
+  - 重要人物（家人、朋友、宠物）
+  - 禁忌话题（用户不喜欢或避免谈论的内容）
 
-#### 1. 短期记忆 (Short-term Memory)
-- **功能**: 存储固定轮数的原始对话历史
-- **特点**: 
-  - 未经过处理的原始对话记录
-  - 有轮数上限，避免上下文浪费
-  - 定期触发更新机制转化为长期记忆
+- **情节记忆 (Episodic Memory)**
+  - 用户经历（考试、旅行、个人里程碑）
+  - 情感亮点（对话中的情感时刻）
+  - 共享记忆（与AI的承诺、计划、有趣事件）
+  - 特殊时刻（用户分享的惊喜和快乐）
+  - 怀旧故事（过去、童年回忆）
 
-#### 2. 长期记忆 (Long-term Memory)
+- **语义记忆 (Semantic Memory)**
+  - 价值观（对幸福、爱情、成长的看法）
+  - 核心主题（重复的情感模式、人生信念）
+  - 长期目标与抱负（想成为的人、追求的生活）
 
-**A. 事实记忆 (Factual Memory)**
-- 用户身份信息 (姓名、昵称、偏好称呼)
-- 喜好与厌恶 (食物、天气、颜色、动物等)
-- 兴趣与习惯 (爱好、日常作息、生活方式)
-- 重要人物 (家人、朋友、宠物)
-- 禁忌话题 (用户不喜欢或避免谈论的内容)
+## 🛠️ 安装和配置
 
-**B. 情节记忆 (Episodic Memory)**
-- 用户经历 (考试、旅行、个人里程碑)
-- 情感亮点 (对话中的情感时刻)
-- 共享记忆 (与AI的承诺、计划、有趣事件)
-- 特殊时刻 (用户分享的惊喜和快乐)
-- 怀旧故事 (过去、童年回忆)
+### 环境要求
+- Python 3.8+
+- SQLite 3
+- 网络连接（用于LLM API调用）
 
-**C. 语义记忆 (Semantic Memory)**
-- 价值观 (对幸福、爱情、成长的看法)
-- 核心主题 (重复的情感模式、人生信念)
-- 长期目标与抱负 (想成为的人、追求的生活)
+### 安装步骤
 
-## ⚙️ 核心机制
+1. **克隆项目**
+```bash
+git clone <repository-url>
+cd memoryrepository
+```
 
-### Memory Update Mechanism
-- **触发条件**: 每N轮对话后自动触发
-- **更新流程**: 短期记忆 → 总结分析 → 长期记忆
-- **示例**: 每10轮对话后，将短期记忆总结为长期记忆
+2. **安装依赖**
+```bash
+pip install -r requirements.txt
+```
 
-### Memory Interaction
-- **功能**: 实现记忆的检索和应用
-- **作用**: 将用户历史转化为记忆，将记忆加入到对话上下文
+3. **配置环境变量**
+```bash
+cp .env.example .env
+# 编辑 .env 文件，添加您的API密钥
+```
 
-### MemoryRoom
-- **功能**: 统一记忆存储和管理中心
-- **特点**: 智能记忆分类、检索和更新
+4. **启动应用**
+```bash
+streamlit run streamlit_demo.py --server.port 8506
+```
 
-## 🚀 技术特性
+### 环境变量配置
 
-### 智能记忆管理
-- 多层次记忆结构设计
-- 自动记忆更新机制
-- 智能记忆检索和应用
+```bash
+# LLM配置
+LLM_PROVIDER=openai  # 可选: openai, deepseek
+LLM_MODEL=gpt-4o-mini  # OpenAI模型: gpt-4o-mini, gpt-4o, gpt-3.5-turbo, gpt-4, gpt-4-turbo | DeepSeek模型: deepseek-chat, deepseek-coder, deepseek-llm-7b-chat
+LLM_API_KEY=your_openai_api_key_here
 
-### 个性化体验
-- 基于用户画像的定制化响应
-- 情感连接和深度理解
-- 持续学习和适应能力
+# DeepSeek配置（如果使用DeepSeek）
+DEEPSEEK_API_KEY=your_deepseek_api_key_here
 
-### 高效性能
-- 优化的记忆存储结构
-- 智能上下文管理
-- 避免记忆冗余和浪费
+# 记忆系统配置
+MEMORY_UPDATE_INTERVAL=10  # 记忆更新间隔（轮数）
+SHORT_TERM_MAX_ROUNDS=20   # 短期记忆最大轮数
 
-### 灵活的LLM支持
-- **LangChain集成**：使用LangChain框架，支持多种LLM提供商
-- **动态模型切换**：运行时切换OpenAI、DeepSeek等不同模型
-- **标准化接口**：统一的LLM调用接口，易于扩展
-- **提示词模板**：使用LangChain的提示词模板系统
+# Prompt查看密码
+PROMPT_VIEW_PASSWORD=admin123  # 查看Prompt详情所需的密码
+```
+
+## 🎯 使用指南
+
+### 快速开始
+
+1. **访问系统**: 打开浏览器访问 `http://localhost:8506`
+
+2. **用户登录**: 在侧边栏输入用户名，点击"登录/注册"
+
+3. **配置API**: 在侧边栏配置您的LLM API密钥
+
+4. **开始对话**: 在聊天框中输入消息，开始与小王子对话
+
+### 功能说明
+
+#### 🔑 API配置
+- 支持OpenAI和DeepSeek多种LLM提供商
+- 动态模型切换
+- 本地.env文件配置支持
+
+#### 🎭 Prompt管理
+- 查看当前Prompt信息
+- 切换不同的Prompt配置
+- 密码保护的Prompt详情查看
+
+#### 💾 记忆管理
+- 实时显示记忆统计
+- 导出记忆数据
+- 清空记忆功能
+- 查看记忆更新历史
+
+#### 👤 用户管理
+- 无密码登录系统
+- 用户数据隔离
+- 用户统计信息
+- 会话管理
+
+#### 🔒 隐私保护
+- 数据存储位置说明
+- 隐私风险提醒
+- 数据访问权限说明
+- 隐私保护建议
+
+## 📊 系统功能
+
+### 已实现功能 ✅
+
+#### 核心功能
+- [x] AI Agent基础架构
+- [x] 短期记忆管理
+- [x] 长期记忆管理
+- [x] 记忆更新机制
+- [x] 记忆交互模块
+
+#### 用户界面
+- [x] Streamlit Web界面
+- [x] 实时聊天功能
+- [x] 记忆统计显示
+- [x] 系统配置界面
+- [x] 响应式设计
+
+#### 用户管理
+- [x] 多用户支持
+- [x] 数据隔离
+- [x] 用户登录系统
+- [x] 会话管理
+- [x] 用户统计
+
+#### 数据存储
+- [x] SQLite数据库
+- [x] 数据持久化
+- [x] 多用户数据隔离
+- [x] 数据导出功能
+- [x] 记忆更新历史
+
+#### LLM集成
+- [x] OpenAI API支持
+- [x] DeepSeek API支持
+- [x] 动态模型切换
+- [x] LangChain框架集成
+- [x] 多模型支持
+
+#### 隐私保护
+- [x] 数据存储位置说明
+- [x] 隐私风险提醒
+- [x] 访问权限说明
+- [x] 隐私保护建议
+
+### 待实现功能 🚧
+
+#### 高级功能
+- [ ] 工具集成 (MCP, Function Call)
+- [ ] 知识库集成 (RAG, Vector Database)
+- [ ] 多阶段Prompt系统
+- [ ] 记忆可视化
+- [ ] 性能优化
+
+#### 部署功能
+- [ ] 云端数据库支持
+- [ ] 数据加密
+- [ ] 访问控制
+- [ ] 数据匿名化
+- [ ] 生产环境部署
+
+## 🔧 技术栈
+
+### 后端技术
+- **Python 3.8+**: 主要开发语言
+- **LangChain**: LLM集成框架
+- **SQLite**: 数据存储
+- **Pydantic**: 数据验证
+- **Loguru**: 日志管理
+
+### 前端技术
+- **Streamlit**: Web界面框架
+- **HTML/CSS**: 界面样式
+- **JavaScript**: 交互功能
+
+### 外部服务
+- **OpenAI API**: GPT模型服务
+- **DeepSeek API**: DeepSeek模型服务
 
 ## 📁 项目结构
 
 ```
 memoryrepository/
-├── LICENSE                 # Apache 2.0 许可证
-├── readme.md              # 项目说明文档
-├── requirements.txt        # 项目依赖
-├── env.example            # 环境变量模板
-├── main.py                # 主入口文件
-├── core/                  # 核心模块
-│   ├── agent.py           # AI Agent主控制器
-│   ├── llm.py             # LLM接口封装(LangChain)
-│   └── memory/            # 记忆系统
+├── core/                          # 核心模块
+│   ├── __init__.py
+│   ├── agent.py                   # AI Agent主类
+│   ├── llm.py                     # LLM接口
+│   ├── user_manager.py            # 用户管理
+│   └── memory/                    # 记忆系统
+│       ├── __init__.py
 │       ├── memory_room.py         # 记忆房间
+│       ├── memory_database.py     # 数据库操作
 │       ├── memory_interaction.py  # 记忆交互
 │       └── memory_update_mechanism.py  # 记忆更新机制
-├── config/                # 配置管理
-│   ├── settings.py        # 系统配置
-│   └── prompts.py         # 提示词模板
-├── utils/                 # 工具模块
-│   └── logger.py          # 日志系统
-├── examples/              # 示例代码
-│   └── model_switch_demo.py  # 模型切换演示
-└── resources/
-    └── picture/
-        └── MemoryRepositoryforLittlePrice.svg  # 系统架构图
+├── config/                        # 配置模块
+│   ├── __init__.py
+│   ├── settings.py                # 系统配置
+│   ├── prompt_manager.py          # 提示词管理
+│   └── prompts_config.yaml        # 提示词配置
+├── utils/                         # 工具模块
+│   └── logger.py                  # 日志工具
+├── examples/                      # 示例代码
+├── tests/                         # 测试代码
+├── logs/                          # 日志文件
+├── data/                          # 数据文件
+│   ├── users.db                   # 用户数据库
+│   └── memory.db                  # 记忆数据库
+├── resources/                     # 资源文件
+│   └── picture/                   # 图片资源
+├── streamlit_demo.py              # Streamlit主应用
+├── run_streamlit.py               # 启动脚本
+├── requirements.txt               # 依赖包
+├── .env.example                   # 环境变量示例
+├── readme.md                      # 项目文档
+├── DEPLOYMENT_GUIDE.md            # 部署指南
+└── STREAMLIT_USAGE.md             # 使用说明
 ```
 
-## 🚀 快速开始
+## 🔒 隐私和安全
 
-### 1. 安装依赖
+### 数据存储
+- **本地部署**: 数据存储在本地SQLite数据库
+- **云端部署**: 支持云端数据库服务
+- **数据隔离**: 每个用户数据完全独立
+
+### 隐私保护
+- **数据加密**: 支持敏感数据加密
+- **访问控制**: 基于角色的权限管理
+- **数据匿名化**: 支持用户数据匿名化处理
+- **隐私声明**: 明确的数据使用说明
+
+### 安全建议
+1. 使用强密码保护Prompt查看功能
+2. 定期备份用户数据
+3. 在生产环境中使用云端数据库
+4. 实施数据加密和访问控制
+
+## 🚀 部署指南
+
+### 本地部署
 ```bash
-pip install -r requirements.txt
+# 开发测试环境
+streamlit run streamlit_demo.py --server.port 8506
 ```
 
-### 2. 配置环境变量
+### 云端部署
 ```bash
-# 复制环境变量模板
-cp env.example .env
-
-# 编辑.env文件，设置您的API密钥
-LLM_PROVIDER=openai  # 或 deepseek
-LLM_MODEL=gpt-4o-mini
-LLM_API_KEY=your_api_key_here
+# Streamlit Cloud部署
+# 1. 上传到GitHub
+# 2. 在Streamlit Cloud连接仓库
+# 3. 配置环境变量
+# 4. 部署应用
 ```
 
-### 3. 运行系统
-```bash
-# 启动命令行交互界面
-python main.py
+### 生产环境部署
+- 使用云端数据库服务（MongoDB Atlas, PostgreSQL）
+- 实施数据加密和访问控制
+- 配置负载均衡和监控
+- 定期备份和恢复测试
 
-# 或者运行模型切换演示
-python examples/model_switch_demo.py
-```
+详细部署说明请参考 [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)
 
-### 4. 支持的模型配置
+## 📈 性能指标
 
-**OpenAI模型**：
-- `gpt-4o` - 最新的大模型
-- `gpt-4o-mini` - 快速且经济
-- `gpt-3.5-turbo` - 经典选择
+### 系统性能
+- **响应时间**: < 3秒（取决于LLM API）
+- **并发用户**: 支持多用户同时使用
+- **数据存储**: SQLite数据库，支持GB级数据
+- **内存使用**: 优化的内存管理
 
-**DeepSeek模型**：
-- `deepseek-chat` - 通用对话模型
-- `deepseek-coder` - 编程专用模型
-- `deepseek-llm-7b-chat` - 轻量级模型
-
-## 🎯 应用场景
-
-### 教育助手
-- 跟踪学习进度和偏好
-- 适应不同学习风格
-- 提供定制化学习建议
-
-### 情感陪伴
-- 记住重要时刻和情感状态
-- 提供情感支持和理解
-- 建立深度情感连接
-
-### 个人助理
-- 了解用户习惯和需求
-- 提供个性化建议和服务
-- 成为真正的智能伙伴
-
-## 🌟 设计理念
-
-### 小王子哲学
-- **爱与关怀**: 通过记忆体现对用户的深度关怀
-- **友谊与理解**: 建立基于理解的智能友谊
-- **成长与变化**: 系统随用户一起成长和适应
-
-### 技术哲学
-- **人性化设计**: 模拟人类记忆的自然过程
-- **智能进化**: 通过持续学习不断改进
-- **情感智能**: 理解和回应用户的情感需求
-
-## 🔧 技术实现
-
-### 记忆存储
-- 结构化数据存储
-- 语义向量化
-- 智能索引和检索
-
-### 记忆更新
-- 自然语言处理
-- 情感分析
-- 智能总结和归纳
-
-### 上下文管理
-- 动态上下文构建
-- 记忆优先级排序
-- 智能记忆选择
-
-## 📈 未来规划
-
-### 短期目标
-- [ ] 完善记忆更新算法
-- [ ] 优化记忆检索效率
-- [ ] 增强情感理解能力
-
-### 长期愿景
-- [ ] 支持多模态记忆存储
-- [ ] 实现跨会话记忆迁移
-- [ ] 建立记忆安全保护机制
+### 用户体验
+- **界面响应**: 实时更新
+- **数据持久化**: 自动保存
+- **错误处理**: 友好的错误提示
+- **多语言支持**: 中文界面
 
 ## 🤝 贡献指南
 
-我们欢迎所有形式的贡献！如果您想参与项目开发：
+### 开发环境设置
+1. Fork项目
+2. 创建功能分支
+3. 提交代码
+4. 创建Pull Request
 
-1. Fork 本项目
-2. 创建您的特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交您的更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开一个 Pull Request
+### 代码规范
+- 遵循PEP 8代码风格
+- 添加适当的注释和文档
+- 编写单元测试
+- 更新相关文档
+
+### 测试
+```bash
+# 运行测试
+python -m pytest tests/
+
+# 运行特定测试
+python test_user_management.py
+python test_sqlite_memory_storage.py
+```
+
+## 📝 更新日志
+
+### v1.0.0 (2024-08-18)
+#### 🎉 重大更新
+- ✅ 实现完整的AI Agent架构
+- ✅ 添加用户管理系统
+- ✅ 集成SQLite数据库
+- ✅ 实现记忆更新机制
+- ✅ 添加隐私保护功能
+
+#### 🔧 技术改进
+- 重构LLM集成，使用LangChain框架
+- 优化记忆系统架构
+- 改进用户界面设计
+- 增强错误处理机制
+
+#### 🛡️ 安全增强
+- 添加数据隐私保护
+- 实现用户数据隔离
+- 增加访问控制机制
+- 提供隐私风险提醒
+
+#### 📊 功能完善
+- 支持多用户并发使用
+- 添加记忆统计和可视化
+- 实现Prompt管理系统
+- 提供数据导出功能
+
+## 📞 技术支持
+
+### 常见问题
+1. **API密钥配置**: 确保在.env文件中正确配置API密钥
+2. **数据库问题**: 检查data目录权限和SQLite文件
+3. **端口冲突**: 使用不同端口启动应用
+4. **内存不足**: 调整短期记忆轮数限制
+
+### 获取帮助
+- 查看 [STREAMLIT_USAGE.md](STREAMLIT_USAGE.md) 使用说明
+- 参考 [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) 部署指南
+- 提交Issue报告问题
+- 参与项目讨论
 
 ## 📄 许可证
 
-本项目采用 Apache License 2.0 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
 ## 🙏 致谢
 
-感谢《小王子》作者圣埃克苏佩里为我们带来的哲学启发，让我们能够设计出这样一个充满人文关怀的AI记忆系统。
+感谢所有为这个项目做出贡献的开发者和用户！
 
 ---
 
-**让AI拥有记忆，让对话更有温度** 🌹
-
-*"真正重要的东西用眼睛是看不见的，要用心去感受。"* - 小王子
+**🌹 小王子记忆架构系统** - 让AI拥有真正的记忆，让对话更有温度。
