@@ -18,6 +18,10 @@ Context = Long-term Memory + Short-term Memory
 MemoryRoom + Memory Interaction + Memory Update Mechanism
 ```
 
+![小王子记忆构架系统架构图](resources/picture/MemoryRepositoryforLittlePrice.svg)
+
+*系统架构图展示了AI Agent与用户交互的完整流程，包括记忆的层次结构、更新机制和交互方式*
+
 ### 记忆层次结构
 
 #### 1. 短期记忆 (Short-term Memory)
