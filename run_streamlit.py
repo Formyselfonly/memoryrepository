@@ -32,7 +32,9 @@ def main():
         subprocess.run([
             sys.executable, "-m", "streamlit", "run", "streamlit_demo.py",
             "--server.port", "8501",
-            "--server.address", "localhost"
+            # "--server.address", "localhost"
+            # 上面这个是本机才能访问,局域网其他人不能访问
+            "--server.address", "0.0.0.0"
         ])
     except KeyboardInterrupt:
         print("\n👋 应用已停止")

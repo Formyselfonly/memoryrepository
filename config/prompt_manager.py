@@ -18,7 +18,7 @@ class PromptManager:
     def __init__(self, config_file: str = "config/prompts_config.yaml"):
         self.config_file = config_file
         self.prompts_config = self._load_prompts_config()
-        self.current_prompt_name = "little_prince_v1"  # 默认Prompt
+        self.current_prompt_name = "little_prince_fan_v1"  # 默认Prompt
     
     def _load_prompts_config(self) -> Dict[str, Any]:
         """加载Prompt配置文件"""
