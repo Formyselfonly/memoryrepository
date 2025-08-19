@@ -167,11 +167,16 @@ class MemoryRoom:
         
         return self.database.export_memory_data(self.user_id, export_path)
     
-    def get_memory_updates_history(self, limit: int = 10) -> List[Dict[str, Any]]:
+    def get_memory_updates_history(self, limit: int = None) -> List[Dict[str, Any]]:
         """获取记忆更新历史"""
         if not self.user_id:
             logger.error("用户ID未设置，无法获取记忆更新历史")
             return []
+        
+        # 如果没有指定limit，使用配置中的默认值
+        if limit is None:
+            # 从配置中获取默认值，如果没有配置则使用5
+            limit = getattr(self, 'max_short_term_rounds', 5)
         
         return self.database.get_memory_updates_history(self.user_id, limit)
     

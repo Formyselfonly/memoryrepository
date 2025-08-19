@@ -386,7 +386,7 @@ class MemoryDatabase:
             logger.error(f"导出记忆数据失败: {e}")
             return ""
     
-    def get_memory_updates_history(self, user_id: str, limit: int = 10) -> List[Dict[str, Any]]:
+    def get_memory_updates_history(self, user_id: str, limit: int = 5) -> List[Dict[str, Any]]:
         """获取记忆更新历史"""
         try:
             with self.get_connection() as conn:

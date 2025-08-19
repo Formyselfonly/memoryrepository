@@ -125,19 +125,27 @@ class LittlePrinceAgent:
                         if value:
                             existing_value = existing_long_term.get('factual', {}).get(key, "")
                             logger.info(f"  比较 {key}: '{value}' vs '{existing_value}'")
-                            if key not in existing_long_term.get('factual', {}) or existing_long_term['factual'][key] != value:
+                            # 改进比较逻辑：检查是否有新的或更新的内容
+                            if (key not in existing_long_term.get('factual', {}) or 
+                                existing_long_term['factual'][key] != value):
                                 logger.info(f"    ✅ 检测到变化")
                                 has_changes = True
                                 break
                             else:
                                 logger.info(f"    ❌ 没有变化")
                 
-                # 检查情节记忆是否有变化
+                # 检查情节记忆是否有变化 - 改进逻辑
                 if 'episodic' in new_long_term and new_long_term['episodic']:
                     logger.info(f"检查情节记忆: {len(new_long_term['episodic'])} 项")
-                    if new_long_term['episodic']:
-                        logger.info(f"    ✅ 检测到变化")
+                    existing_episodic = existing_long_term.get('episodic', [])
+                    
+                    # 如果新的情节记忆数量更多，或者内容不同，则认为有变化
+                    if (len(new_long_term['episodic']) > len(existing_episodic) or
+                        new_long_term['episodic'] != existing_episodic):
+                        logger.info(f"    ✅ 检测到变化 (新: {len(new_long_term['episodic'])}, 旧: {len(existing_episodic)})")
                         has_changes = True
+                    else:
+                        logger.info(f"    ❌ 情节记忆没有变化")
                 
                 # 检查语义记忆是否有变化
                 if 'semantic' in new_long_term:
@@ -146,12 +154,18 @@ class LittlePrinceAgent:
                         if value:
                             existing_value = existing_long_term.get('semantic', {}).get(key, "")
                             logger.info(f"  比较 {key}: '{value}' vs '{existing_value}'")
-                            if key not in existing_long_term.get('semantic', {}) or existing_long_term['semantic'][key] != value:
+                            if (key not in existing_long_term.get('semantic', {}) or 
+                                existing_long_term['semantic'][key] != value):
                                 logger.info(f"    ✅ 检测到变化")
                                 has_changes = True
                                 break
                             else:
                                 logger.info(f"    ❌ 没有变化")
+                
+                # 如果没有任何变化，但LLM确实生成了新的记忆内容，强制更新
+                if not has_changes and new_long_term:
+                    logger.info("虽然检测到没有变化，但LLM生成了新的记忆内容，强制更新")
+                    has_changes = True
             
             logger.info(f"最终比较结果: has_changes = {has_changes}")
             

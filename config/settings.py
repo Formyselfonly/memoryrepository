@@ -16,7 +16,6 @@ class Config(BaseSettings):
     # 记忆配置
     SHORT_TERM_MAX_ROUNDS: int = 10
     MEMORY_UPDATE_INTERVAL: int = 10
-    
     # 系统配置
     LOG_LEVEL: str = "INFO"
     TEMPERATURE: float = 0.7
