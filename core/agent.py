@@ -7,7 +7,7 @@ from config import PromptManager
 
 
 class LittlePrinceAgent:
-    """小王子AI Agent"""
+    """小王子AIAgent"""
     
     def __init__(self, config, user_id: str = None):
         self.config = config
