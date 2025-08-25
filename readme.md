@@ -405,7 +405,7 @@ python test_sqlite_memory_storage.py
 
 ## 📄 许可证
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+禁止修改和商用,仅供查看
 
 ## 🙏 致谢
 
