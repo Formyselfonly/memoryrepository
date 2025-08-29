@@ -1,5 +1,7 @@
 # 🌹 小王子记忆架构系统 (Little Prince Memory Architecture System)
 
+![小王子界面](/img/littleprice.png)
+
 ![小王子记忆架构系统](resources/picture/MemoryRepositoryforLittlePrice.svg)
 
 ## 📖 项目简介
